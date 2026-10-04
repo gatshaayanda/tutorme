@@ -1,20 +1,20 @@
-# NAMANE TYRES — Agent Operating Contract
+# TutorMe — Agent Operating Contract
 
 ## Product
-Namane Tyres is the real customer-facing digital front door and lightweight operating surface for Thapelo Namane Tyre Fitting Business in Gaborone, Botswana.
+TutorMe Tuition Center & Student Boarding House is the real customer-facing tuition, boarding and learning-support product for Block 8, Gaborone, Botswana, under Keza Educational / Keza Tutoring.
 
-Business location:
-- Plot 16739, Gaborone West Phase 1, Gaborone, Botswana
-- Roadside, opposite Padre Pio Medical Centre
+Known business facts:
+- Enrolment contact: Ruth
+- Phone / WhatsApp: +267 72281640
+- Advertised package: P5,500 per student; tuition services included
+- Advertised facilities: high-speed WiFi, swimming pool, study area, conducive Block 8 location, tuition services, lounge area
 
-Core services: tyre fitting, puncture repair, pressure checks, tyre sales, light wash services and roadside assistance.
-
-This is a real small-business product, not a demo, template, QA app, or generic SaaS.
+Do not invent tutor names, schedules, availability, results, testimonials, affiliations, guarantees or extra prices.
 
 ## Roles
 - Product owner / final reviewer: user
 - Technical navigator + implementation: ChatGPT through repository tooling
-- GitHub is the source of truth
+- GitHub is source of truth
 - No Codex dependency
 
 ## Workflow
@@ -22,189 +22,147 @@ START → INSPECT → BUILD → VERIFY → CHECKPOINT → CONTINUE/RECOVER.
 
 Golden rule: **Unexpected result = STOP → inspect reality → then act.**
 
-Before changing code, inspect the repository, Git state, Firebase configuration, deployed state when relevant, and the actual business workflow. Do not blindly patch production.
+## Product direction
+TutorMe is not merely a brochure and should not become a generic school ERP.
 
-## Product model
-Customer → Request Assistance / Service Enquiry → Owner → Job → Complete
+The core loop is:
+Parent/student discovers TutorMe → understands the real offer → enquires → TutorMe responds → student/parent returns for useful learning guidance, resources and updates → later, linked students/parents may receive role-appropriate progress and next-step information.
 
-Tyre inventory → Customer enquiry → Request → Job / Sale
+The digital product should strengthen the real physical TutorMe experience rather than replace it.
 
-First useful workflow:
-1. Customer opens Namane Tyres.
-2. Customer chooses Request Help.
-3. Customer provides name, phone, vehicle, problem, notes and location where useful.
-4. The app truthfully saves the request online or queues it offline.
-5. Owner sees the request in Operations.
-6. Owner accepts it and moves the job through the real work.
-7. Job is completed.
+## Evidence-led design
+Design decisions should reflect:
+- autonomy, competence and relatedness rather than pressure;
+- retrieval practice and spacing;
+- metacognition and self-regulation;
+- specific, actionable feedback;
+- useful parent engagement;
+- student belonging without public exposure.
 
-## Public customer experience
-The public site must identify Namane Tyres and its Gaborone location, make Request Help prominent, explain real services without inventing prices or guarantees, provide direct phone/WhatsApp fallbacks when configured, work on a phone first, and remain useful when connectivity is poor.
+Gamification is optional. If used, it must reinforce learning behaviour rather than empty points, streaks or public ranking.
 
-Do not require a customer account just to request help.
+Do not build public student profiles, public grades, public weaknesses, child contact details or unmoderated student-to-student messaging.
 
-Do not invent opening hours, prices, tyre brands, stock, testimonials, promotions, response times, emergency guarantees, or contact numbers.
+## Public experience
+The public site must make tuition and boarding equally understandable and make Enrol / Enquire prominent.
 
-## Request workflow
-Operational statuses:
-- New
-- Accepted
-- In Progress
-- Ready / Awaiting Customer
-- Complete
-- Cancelled
+The enquiry form should not require an account. Capture only information useful to Ruth/team:
+- parent/guardian name
+- phone/WhatsApp
+- student name
+- education level
+- subjects
+- tuition needs
+- boarding interest
+- optional notes
 
-A request submission is not the same as business acceptance.
+Truthful states:
+- synchronized online enquiry: TutorMe has the enquiry;
+- offline queued enquiry: saved on this phone and waiting to synchronize;
+- failed save: do not claim TutorMe received it.
 
-Customer-facing truth:
-- Online save: **Sent to Namane Tyres.**
-- Offline queued save: **Saved on this phone — waiting to send.**
-- Failure: explain that the request was not recorded and provide a human fallback.
+## Learning feed
+The feed is a moderated editorial learning layer, not social media.
 
-Never say the business received a request until synchronization/receipt is actually established.
+Useful categories:
+- Study tip
+- Challenge
+- Notice
+- Student life
+- Achievement
 
-Capture GPS only with user permission. If location permission is denied or unavailable, the request can still be submitted with a useful text location/notes.
+Content can include retrieval/spacing prompts, exam/timetable notices when verified, parent guidance, student-life notices and factual TutorMe achievements.
 
-## Offline-first PWA
-Offline is a product capability, not a fake status.
+Keep mixed-age content safe. Private student information never enters the public feed.
 
-Maintain:
-- installable PWA manifest
-- registered service worker
-- cached app shell
+## Resources
+Owner/staff can publish approved PDFs and images through UploadThing. Firestore stores metadata, not file blobs.
+
+UploadThing uploads require authenticated owner/staff access and connectivity. Never claim an upload succeeded until the remote upload and metadata save succeed.
+
+## Admin / Operations
+/admin is for authorized owner/staff only.
+
+First useful operational areas:
+- enquiries and enquiry status
+- prospective/active student records
+- boarding availability summary
+- learning feed publishing
+- resource publishing
+
+Later layers may add:
+- attendance
+- lesson/session records
+- subject goals
+- homework/revision evidence
+- specific tutor feedback
+- parent digests
+- student/parent accounts linked by invitation/owner approval
+- opt-in notifications
+
+Do not create fake progress dashboards before the underlying evidence exists.
+
+## PWA / offline
+TutorMe must be a real installable PWA:
+- service-worker public shell
 - offline route
-- cached public assets after successful visits
-- Firestore persistent local cache for structured data
-- queued customer request writes through Firestore supported offline persistence
+- bounded static/public caching
+- Firestore persistent local cache
 - visible online/offline state
 - truthful queued/synchronized wording
 
-The service worker must not cache private Firebase API responses indiscriminately. Do not cache large videos or media blobs in the app shell. Cache public static assets only after successful network responses.
+The service worker must not cache Firebase/private API responses or large media blobs.
 
-Previously visited public pages remain available. A new request may be queued by Firestore when supported. Admin data may be readable from Firestore local cache after it has previously been loaded. Actions requiring connectivity must say so rather than pretending they completed.
+Public reading should remain useful on weak connectivity. Admin/private data remains governed by Firebase Auth and Firestore.
+
+UploadThing media uploads are online-only.
 
 ## Firebase
-Use the dedicated Firebase project: namane-tyres.
+Dedicated project: tutorme-d55b7.
 
-Never use Meating Place, Avram, Translend, AdminHub, or another project's Firebase identifiers, credentials, collections, seed data, or rules.
+Browser config uses NEXT_PUBLIC_FIREBASE_* environment variables.
 
-Browser Firebase configuration must use NEXT_PUBLIC_FIREBASE_* environment variables. Never commit .env.local, service-account JSON, or private credentials.
+Never commit .env.local, service-account JSON or private credentials.
 
-## Firestore authorization
-Recommended boundary:
-- public customer request create only, with strict field validation
-- customer cannot read/update/delete requests
-- admins/{uid} is provisioned outside the client with role owner or staff
-- owner/staff can read and update operational requests
-- inventory and other private operational data are admin-only unless a future public read requirement is explicitly designed
+Admin access requires Firebase Auth plus admins/{uid} with role owner or staff. No client-side admin provisioning.
 
-Never weaken rules to hide a UI or configuration problem.
+Firestore is default-deny.
 
-## Data integrity
-Keep request records understandable after the business changes its catalogue. Preserve customer-entered service/tyre text or snapshots rather than depending only on mutable current inventory.
+Public:
+- create validated enquiries
+- read published learning posts/resources
+- read the public boarding availability summary
 
-Use server-authoritative timestamps where practical, but do not make the offline customer flow depend on a server round trip just to display a truthful local queued state.
+Private:
+- owner/staff read and modify enquiries, students, learning content, resources and operational data.
 
-## Media
-Business media may live under public/namane-assets/ for stable static content or UploadThing when owner-managed job media is needed. Do not put large media blobs in Firestore. Do not make a child/family image the public identity of the business or expose unnecessary personal information.
+## Mobile/Botswana context
+Build mobile-first and data-conscious. Botswana has strong mobile access but connectivity remains an important design constraint. Useful public material should be cacheable and readable without a constant connection.
 
-## Admin / Operations
-/admin is the real owner/staff operations surface. Keep it small and practical: incoming assistance requests, request details and contact actions, status changes, tyre inventory and useful operational notes.
+TutorMe must not imply affiliation with BEC, Botswana Learning Passport, Moithuti, Atlega or any other education platform.
 
-Do not build a generic CRM, ERP, accounting system, fake payment flow, or customer account platform.
+Current exam references such as PSLE, JCE and BGCSE may be used only as accurate public educational context. Verify current dates/timetables before publishing them.
 
-## Technical baseline
-- Next.js 15
-- React 19
-- TypeScript
-- Firebase Auth
-- Firestore with persistent local cache
-- Firebase Storage where actually needed
-- Vercel
-- installable PWA + service worker
-- Vercel Analytics / Speed Insights
+## Technical references
+Use repositories as patterns, not business logic:
+- Namane Tyres: PWA/offline, persistent Firestore cache, admin auth, truthful queued writes.
+- Meating Place: public offerings/enquiry/request/admin patterns.
+- Avram Kids: booking/customer patterns.
+- Admin Hub Games: explicit PWA install/update UX and bounded caching.
+- BoardSignal/PurePress: editorial feed hierarchy, public/private boundaries, notifications and UploadThing patterns.
+- BOEMO: cached public content, reconnect state and useful return-to-app engagement patterns.
 
-## Build discipline
-Before a meaningful checkpoint run npx tsc --noEmit, npm run lint and npm run build. Do not run npm audit fix --force as blind cleanup. Never commit .env.local or private Firebase credentials.
+## Required verification
+Before meaningful checkpoints:
+- npx tsc --noEmit
+- npm run lint
+- npm run build
+- inspect Git diff/status
+- verify Firebase project identifiers
+- verify no active Namane/tyre terminology remains
+- verify PWA routes/cache names
+- verify online/offline wording is truthful
 
-## Repository boundaries
-Other Admin Hub projects may be technical references only. Active domain terminology, metadata, routes, navigation, Firebase config, service worker cache names and customer-facing errors must be Namane Tyres.
+## Scope discipline
+Prefer the smallest controlled change that moves TutorMe toward the product direction above. Preserve working capabilities only when they fit TutorMe. Delete inherited Namane business assumptions rather than renaming them.
 
-## Final review
-A feature is complete only when it represents the real Namane Tyres business, the customer flow is understandable, offline/online states are truthful, Firebase uses the dedicated namane-tyres project, Firestore rules protect private data, no fabricated business facts were introduced, checks are addressed, and the deployed result matches customer → owner → job.
-
-The goal is a useful digital front door and lightweight operating surface for a real tyre business — not the most complicated system possible.
-
-
-## Contacts and admin directory
-Contacts are an owner-managed business directory, not app users:
-- Existing WhatsApp/business contacts may be imported by an authorized admin.
-- A contact becomes operationally relevant when a request/job is associated with the same phone number.
-- Do not automatically create Firebase Auth users from contact imports.
-- Owner/staff can add, edit, search and delete contacts from /admin.
-- Contact history is derived from assistance requests matching the normalized phone number.
-- WhatsApp VCF imports are parsed locally in the authenticated browser.
-- Contact photos are intentionally ignored.
-- The original VCF and generated contact exports are private and must never be committed.
-
-The inspected WhatsApp export contained 112 vCards, 112 valid Botswana phone numbers, 95 unique phone numbers and 16 duplicate phone-number groups. Re-importing must update existing phone-keyed records rather than create duplicates.
-
-## Admin authentication
-- V1 uses Firebase email/password authentication only.
-- Google sign-in is intentionally deferred.
-- Access requires an authenticated UID with admins/{uid}.role equal to owner or staff.
-- Auth users and their admin role documents are provisioned outside the public client; the app must not expose self-registration or client-side admin provisioning.
-
-
-
-## Jobs, progress sharing and customer-facing updates
-Jobs are the owner-controlled work record behind real customer work. A job can be created manually, from an assistance request, or from a known contact.
-
-Job workflow:
-- New
-- Accepted
-- In Progress
-- Ready / Awaiting Customer
-- Complete
-- Cancelled
-
-A job records customer name/phone, vehicle, service, problem, notes, amount, payment status and operational timestamps as they are added. Do not expose the customer's phone number on the public job view.
-
-Each job receives an unguessable publicShareId. The owner can copy a /job/share/{publicShareId} link and send it to the customer. The public page contains only customer-safe job information and progress photos explicitly uploaded for that job.
-
-### Job progress photos
-- Admin/staff can add progress photos from the job record.
-- Images are compressed on the device before upload to reduce mobile data/storage use.
-- Online: photo uploads to UploadThing and its returned public CDN URL plus metadata are written to the private job record and public share record.
-- Offline: the compressed photo is queued in browser IndexedDB and clearly shown as waiting to sync. It is uploaded automatically when connectivity returns or manually via Sync queued photos.
-- UploadThing is the media store for job progress photos. Never put image blobs in Firestore.
-- Public job progress images are intentionally readable without authentication because the customer share link is the access mechanism. The share ID must be unguessable and public pages must not expose phone numbers or private admin notes.
-- Do not claim a photo was shared/uploaded until the Storage upload and Firestore metadata write succeed. Offline wording must say it is saved on this phone and waiting to sync.
-- Service worker/app-shell caching must not cache job media blobs. UploadThing CDN URLs are deliberately public because the unguessable customer share ID is the access mechanism.
-
-### Job sharing SOP
-1. Create/open the job.
-2. Confirm customer, vehicle and work details.
-3. Save the job.
-4. Copy the customer progress link or open the shared view to verify it.
-5. Add progress photos with short useful captions such as "Puncture found" or "New tyre fitted".
-6. Send the same link to the customer through the normal human channel, such as WhatsApp.
-7. Update the job status as physical work changes.
-8. Before Complete, record amount/payment status where known.
-9. Leave the customer progress page showing the latest safe progress information.
-
-### Operational principle
-The app is the record of work, not a replacement for human communication. WhatsApp/phone remain the human channel; the share link gives the customer a clear, current view of work progress.
-
-
-## Offline hardening checkpoint — October 2026
-- The PWA has separate shell, static and public caches with bounded retention.
-- The service worker never caches /api/ responses or Firebase/private operational data. Firestore persistent local cache remains the source of truth for structured offline data.
-- Admin route shells may be cached so an installed Operations app can open without internet; authentication and Firestore authorization still control access and private data.
-- Public job-share pages use bounded network-first caching because their projection is deliberately customer-safe and contains no phone number.
-- Service-worker installation is non-blocking: shell precaching is best effort and does not require a large video/media download.
-- Service-worker updates must not rely on automatic skipWaiting. The existing explicit update message is retained so an active work session is not unexpectedly replaced.
-- Browser persistent storage is requested best-effort; the app remains functional when the browser declines.
-- Job progress photos are compressed before storage, kept out of Cache Storage, and queued in IndexedDB when offline. The photo outbox is bounded to 40 items and reports when full rather than silently consuming unbounded device storage.
-- Offline wording must distinguish: saved on this phone, waiting to sync, synced/uploaded, and received by Namane Tyres. A customer share link is not considered server-visible until the job has synchronized.
-- Do not add Background Sync as a dependency unless a concrete requirement appears; the current reconnect/online flush path is deliberately simple and explicit.
