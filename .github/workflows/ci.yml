@@ -1,4 +1,4 @@
-name: Meating Place CI
+name: TutorMe CI
 
 on:
   push:
