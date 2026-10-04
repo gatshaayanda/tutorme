@@ -16,6 +16,7 @@ export type PaymentStatus = (typeof PAYMENT_STATUSES)[number];
 export type JobShareStats = { views:number; engagements:number; lastViewedAt?:string; lastEngagedAt?:string };
 export type Job = { id:string; createdAt:string; updatedAt:string; customerName:string; phone:string; vehicle:string; service:string; problem:string; notes:string; status:JobStatus; amount:string; paymentStatus:PaymentStatus; publicShareId:string; shareStats?:JobShareStats; acceptedAt?:string; startedAt?:string; completedAt?:string };
 export type JobInput = Omit<Job,"id"|"createdAt"|"updatedAt"|"publicShareId">;
+export type JobPhoto = { id:string; jobId:string; shareId:string; storagePath:string; url:string; caption:string; createdAt:string };
 
 const requestsCollection=collection(db,"assistanceRequests");
 const inventoryCollection=collection(db,"tyreInventory");
