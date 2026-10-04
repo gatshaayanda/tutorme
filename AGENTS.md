@@ -110,6 +110,7 @@ TutorMe must be a real installable PWA:
 - Firestore persistent local cache
 - visible online/offline state
 - truthful queued/synchronized wording
+- global install promotion on installable browsers, with an explicit in-app Install action
 
 The service worker must not cache Firebase/private API responses or large media blobs.
 
@@ -161,6 +162,7 @@ Before meaningful checkpoints:
 - verify Firebase project identifiers
 - verify no active Namane/tyre terminology remains
 - verify PWA routes/cache names
+- verify the install prompt can appear from the public shell, not only /admin
 - verify online/offline wording is truthful
 
 ## Scope discipline
