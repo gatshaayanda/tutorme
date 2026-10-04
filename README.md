@@ -1,66 +1,64 @@
-# Namane Tyres
+# TutorMe
 
-Namane Tyres is the customer-facing digital front door and lightweight operations surface for Thapelo Namane Tyre Fitting Business in Gaborone, Botswana.
+TutorMe Tuition Center & Student Boarding House is the customer-facing tuition, boarding and learning-support product for Block 8, Gaborone, Botswana, under Keza Educational / Keza Tutoring.
 
-## Business
+## Public experience
 
-- Plot 16739, Gaborone West Phase 1, Gaborone, Botswana
-- Roadside, opposite Padre Pio Medical Centre
-- Tyre fitting
-- Puncture repair
-- Pressure checks
-- Tyre sales
-- Light wash services
-- Roadside assistance
+The public journey is intentionally simple:
 
-## Customer flow
+Discover TutorMe → understand tuition + boarding → enquire → TutorMe responds → return for useful study resources and verified updates.
 
-Customer → Request Assistance → Owner → Job → Complete
+Customers do not need an account to make an enquiry.
 
-Customers do not need an account to request help. The request form accepts name, phone, vehicle, problem, optional landmark/notes and optional device location.
-
-## Offline-first behaviour
-
-The app is an installable PWA with a service worker and Firestore persistent local cache.
-
-Customer-facing states are intentionally truthful:
-
-- Online request: **Sent to Namane Tyres.**
-- Offline request: **Saved on this phone — waiting to send.**
-- Failed save: the app does not claim that Namane Tyres received it.
-
-Firestore synchronizes queued writes when connectivity returns.
+The enquiry captures:
+- parent/guardian name
+- phone / WhatsApp
+- student name
+- education level
+- subjects / tuition needs
+- boarding interest
+- optional notes
 
 ## Operations
 
 `/admin` is protected by Firebase Authentication plus an `admins/{uid}` role document with `owner` or `staff`.
 
-Operations currently covers:
+Current Operations areas:
+- enquiries
+- moderated learning feed
+- resources
+- boarding availability summary
 
-- incoming assistance requests
-- request status: New, Accepted, In Progress, Ready / Awaiting Customer, Complete, Cancelled
-- phone and WhatsApp contact actions
-- tyre inventory: size, brand, condition, quantity, price, availability and notes
+## Offline-first behaviour
 
-## Media
+TutorMe is an installable PWA with a public service worker and Firestore persistent local cache.
 
-Stable business-owned media lives under `public/namane-assets/`.
+Customer-facing states are truthful:
+- synchronized online enquiry: TutorMe has the enquiry
+- offline queued enquiry: saved on this phone and waiting to synchronize
+- failed save: the app does not claim TutorMe received it
 
-The public site uses real Namane Tyres imagery rather than inherited template media. Large videos are deliberately excluded from the service-worker app shell cache.
+The service worker caches bounded public shell/content routes only. Firebase/private API responses and large media are not cached by the service worker.
+
+## Business
+
+- Block 8, Gaborone, Botswana
+- Enrolment contact: Ruth
+- Call / WhatsApp: +267 72281640
+- Advertised package: P5,500 per student, including tuition services
+- Facilities advertised: high-speed WiFi, swimming pool, study area, conducive location, tuition services and lounge area
 
 ## Stack
 
 - Next.js 15 / React 19 / TypeScript
 - Firebase Authentication
 - Cloud Firestore with persistent local cache
-- UploadThing for owner-managed job progress photos
+- UploadThing for approved owner/staff resources
 - Installable PWA + service worker
 - Vercel Analytics + Speed Insights
 - Vercel deployment from GitHub `main`
 
 ## Development
-
-Node version is pinned in `.nvmrc`.
 
 Run:
 
