@@ -1,7 +1,7 @@
 # TutorMe — Agent Operating Contract
 
 ## Product
-TutorMe Tuition Center & Student Boarding House is the real customer-facing tuition, boarding and learning-support product for Block 8, Gaborone, Botswana, under Keza Educational / Keza Tutoring.
+TutorMe Tuition Center is the real customer-facing tuition and learning-support product for Block 8, Gaborone, Botswana, under Keza Educational / Keza Tutoring.
 
 Known business facts:
 - Enrolment contact: Ruth
@@ -44,7 +44,7 @@ Gamification is optional. If used, it must reinforce learning behaviour rather t
 Do not build public student profiles, public grades, public weaknesses, child contact details or unmoderated student-to-student messaging.
 
 ## Public experience
-The public site must make tuition and boarding equally understandable and make Enrol / Enquire prominent.
+The public site must make tuition immediately understandable and make Enrol / Enquire plus direct WhatsApp contact prominent.
 
 The enquiry form should not require an account. Capture only information useful to Ruth/team:
 - parent/guardian name
@@ -53,7 +53,6 @@ The enquiry form should not require an account. Capture only information useful 
 - education level
 - subjects
 - tuition needs
-- boarding interest
 - optional notes
 
 Truthful states:
@@ -86,7 +85,6 @@ UploadThing uploads require authenticated owner/staff access and connectivity. N
 First useful operational areas:
 - enquiries and enquiry status
 - prospective/active student records
-- boarding availability summary
 - learning feed publishing
 - resource publishing
 
@@ -132,7 +130,6 @@ Firestore is default-deny.
 Public:
 - create validated enquiries
 - read published learning posts/resources
-- read the public boarding availability summary
 
 Private:
 - owner/staff read and modify enquiries, students, learning content, resources and operational data.
@@ -152,6 +149,15 @@ Use repositories as patterns, not business logic:
 - Admin Hub Games: explicit PWA install/update UX and bounded caching.
 - BoardSignal/PurePress: editorial feed hierarchy, public/private boundaries, notifications and UploadThing patterns.
 - BOEMO: cached public content, reconnect state and useful return-to-app engagement patterns.
+
+## Competitive UX research checkpoint — 2026-10-06
+- Reviewed current tutoring UX patterns and Botswana alternatives including Stadira Training Institute, Superprof Gaborone listings and Tutopiya's Botswana offer.
+- Reusable patterns: state subject/level fit quickly, make the parent/student next step obvious, keep mobile enquiry short, provide direct contact, and build trust without inventing testimonials or outcomes.
+- TutorMe should not copy marketplace pricing or claims. Its advantage is a direct local tuition relationship, a simple enquiry path, and useful learning content that brings families back.
+- Do not add tutor qualifications, exam results, reviews, guarantees, exact subject lists, schedules or availability until the business supplies verified evidence.
+
+## Required removal rule
+Boarding is retired. Remove boarding-related product copy, fields, routes, UI and rules before meaningful checkpoints. Existing legacy Firestore documents are not to be fabricated or rewritten without a specific data-migration need.
 
 ## Required verification
 Before meaningful checkpoints:
