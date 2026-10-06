@@ -1,6 +1,6 @@
 # TutorMe
 
-TutorMe Tuition Center & Student Boarding House is the customer-facing tuition, boarding and learning-support product for Block 8, Gaborone, Botswana, under Keza Educational / Keza Tutoring.
+TutorMe Tuition Center is the customer-facing tuition and learning-support product for Block 8, Gaborone, Botswana, under Keza Educational / Keza Tutoring.
 
 ## Public experience
 
@@ -16,7 +16,6 @@ The enquiry captures:
 - student name
 - education level
 - subjects / tuition needs
-- boarding interest
 - optional notes
 
 ## Operations
@@ -27,7 +26,6 @@ Current Operations areas:
 - enquiries
 - moderated learning feed
 - resources
-- boarding availability summary
 
 ## Offline-first behaviour
 
