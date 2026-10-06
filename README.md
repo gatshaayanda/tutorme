@@ -6,7 +6,7 @@ TutorMe Tuition Center is the customer-facing tuition and learning-support produ
 
 The public journey is intentionally simple:
 
-Discover TutorMe → understand tuition + boarding → enquire → TutorMe responds → return for useful study resources and verified updates.
+Discover TutorMe → understand the tuition offer → enquire → TutorMe responds → return for useful study resources and verified updates.
 
 Customers do not need an account to make an enquiry.
 
