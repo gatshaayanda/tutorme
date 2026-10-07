@@ -16,7 +16,7 @@ export async function createEnquiry(input:Omit<Enquiry,"id"|"status">){const ref
 export async function getPublishedPosts(){const s=await getDocs(query(posts,where("published","==",true),orderBy("createdAt","desc"),limit(30)));return s.docs.map(d=>({id:d.id,...d.data()} as LearningPost))}
 export async function getPublishedProviders(){const s=await getDocs(query(providers,where("published","==",true),orderBy("featured","desc"),orderBy("createdAt","desc"),limit(100)));return s.docs.map(d=>({id:d.id,...d.data()} as Provider))}
 export async function getAllProviders(){const s=await getDocs(query(providers,orderBy("createdAt","desc"),limit(200)));return s.docs.map(d=>({id:d.id,...d.data()} as Provider))}
-export async function saveProvider(input:Omit<Provider,"id"|"createdAt"|"updatedAt">,id?:string){const now=new Date().toISOString();const ref=id?doc(db,"providers",id):doc(providers);await setDoc(ref,{...input,createdAt:id?undefined:now,updatedAt:now},{merge:true});return ref.id}
+export async function saveProvider(input:Omit<Provider,"id"|"createdAt"|"updatedAt">,id?:string){const now=new Date().toISOString();const ref=id?doc(db,"providers",id):doc(providers);await setDoc(ref,id?{...input,updatedAt:now}:{...input,createdAt:now,updatedAt:now},{merge:true});return ref.id}
 export async function deleteProvider(id:string){await deleteDoc(doc(db,"providers",id))}
 export async function getPublishedResources(){const s=await getDocs(query(resources,where("published","==",true),orderBy("createdAt","desc"),limit(50)));return s.docs.map(d=>({id:d.id,...d.data()} as Resource))}
 export async function getAllEnquiries(){const s=await getDocs(query(enquiries,orderBy("createdAt","desc"),limit(100)));return s.docs.map(d=>({id:d.id,...d.data()} as Enquiry))}
