@@ -1,5 +1,5 @@
 "use client";
-import{collection,deleteDoc,doc,getDoc,getDocs,limit,orderBy,query,setDoc,updateDoc,where}from"firebase/firestore";
+import{collection,doc,getDoc,getDocs,limit,orderBy,query,setDoc,updateDoc,where}from"firebase/firestore";
 import{auth,db}from"./client";
 export type CentreRole="owner"|"staff"|"tutor"|"parent"|"student";
 export type WorkspaceStatus="pending"|"active"|"paused";
