@@ -1,0 +1,12 @@
+"use client";
+import{useState}from"react";
+import{createUserWithEmailAndPassword}from"firebase/auth";
+import{auth}from"@/lib/firebase/client";
+import{createWorkspace}from"@/lib/firebase/data";
+import{useRouter}from"next/navigation";
+
+export default function RegisterCentre(){
+ const router=useRouter();const[form,setForm]=useState({name:"",email:"",password:"",phone:"",location:"",description:""});const[error,setError]=useState("");const[busy,setBusy]=useState(false);
+ async function submit(e:React.FormEvent){e.preventDefault();setBusy(true);setError("");try{const cred=await createUserWithEmailAndPassword(auth,form.email.trim(),form.password);const id=await createWorkspace({name:form.name.trim(),slug:form.name.toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"")+"-"+cred.user.uid.slice(0,6),ownerUid:cred.user.uid,contactEmail:form.email.trim(),phone:form.phone.trim(),location:form.location.trim(),description:form.description.trim()});router.push("/workspace/"+id)}catch(err){setError(err instanceof Error?err.message:"Could not create your tuition workspace.");}finally{setBusy(false)}}
+ return <main className="adminPage"><div className="adminShell"><div className="adminTop"><div><span className="eyebrow">TutorMe for tuition centres</span><h1>Create your workspace.</h1><p>Register your centre, then manage students, sessions, parents and fees from one private workspace.</p></div></div><section className="adminPanel"><form className="adminForm compact" onSubmit={submit}><input placeholder="Tuition centre name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} required/><input type="email" placeholder="Owner email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} required/><input type="password" minLength={6} placeholder="Password" value={form.password} onChange={e=>setForm({...form,password:e.target.value})} required/><input placeholder="Centre phone / WhatsApp" value={form.phone} onChange={e=>setForm({...form,phone:e.target.value})} required/><input placeholder="Location" value={form.location} onChange={e=>setForm({...form,location:e.target.value})} required/><textarea placeholder="Short description" value={form.description} onChange={e=>setForm({...form,description:e.target.value})}/>{error&&<p className="error">{error}</p>}<button className="button primary" disabled={busy}>{busy?"Creating…":"Create tuition workspace"}</button></form></section></div></main>
+}
