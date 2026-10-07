@@ -244,3 +244,65 @@ Before meaningful checkpoints:
 Prefer the smallest controlled change that moves TutorMe toward the product direction above. Preserve working capabilities only when they fit TutorMe. Delete inherited Namane business assumptions rather than renaming them.
 
 When requirements from Ruth/the owner are still forthcoming, record them as requirements to capture rather than inventing implementation details.
+
+
+## Owner requirement — tuition-centre workspaces — 2026-10-07
+The owner has now explicitly expanded the product beyond public discovery: **tuition centres should be able to register on TutorMe and receive their own private tuition workspace.**
+
+This requirement is central to the product direction:
+- A tuition centre can register its own organisation/workspace on TutorMe rather than being only a public marketplace listing.
+- The centre workspace is the operational home for that centre's tuition activity.
+- Centre staff/owners can onboard students.
+- Centres can invite parents to engage with the student's tuition relationship and invite tutors/staff where appropriate.
+- Centres can facilitate tuition sessions online as well as in person. Online sessions may carry a meeting link; TutorMe must not imply that TutorMe itself provides a video-conferencing service unless an integration is actually implemented.
+- Centres can track and resolve student fee/payment obligations. TutorMe may record fee amounts, due dates and Paid/Due/Waived state, but must not claim a payment was actually received unless the centre records/confirmes it.
+- Workspace membership is role-based: owner, staff, tutor, parent, student.
+- Invitation/join flows are part of the product, not a future marketing claim.
+- The platform owner/staff Operations area oversees registered centres and public provider listings; the centre's workspace handles its own operational data.
+
+### Internal implementation references
+Translend is the intended reference for the **workspace + invitation concept**: reuse the principle of a customer-owned workspace and invite-driven participation rather than inventing a completely separate account model.
+
+BOEMO is the intended reference for **simple admin/Operations UX**: keep operational controls direct, tabbed, data-driven and easy to understand rather than building an enterprise ERP.
+
+Where an exact Translend implementation cannot be inspected through the connected repository tooling, do not claim an exact code reuse. Apply the known product pattern only.
+
+### Current TutorMe workspace model
+The first implementation introduces:
+- `workspaces`
+- `workspaceMembers`
+- `workspaceStudents`
+- `tuitionSessions`
+- `workspaceFees`
+- `workspaceInvites`
+
+The public centre registration path creates a Firebase email/password account and a private centre workspace. The workspace provides basic student, session, fee and invitation operations. Platform Operations can see registered centres and manage public provider listings.
+
+This is an operational foundation, not permission to invent:
+- payment gateways
+- automated billing
+- video conferencing infrastructure
+- attendance claims
+- grades/results
+- tutor qualifications
+- reviews/ratings
+- schedules/availability beyond records actually entered by a centre.
+
+### Workspace product loop
+Centre registers → creates workspace → adds students → invites parents/tutors/staff → schedules tuition → shares/hosts online session through the centre's chosen meeting link or runs in person → records fees → resolves fee state → parents/students engage → centre continues managing tuition.
+
+The public marketplace loop remains separate:
+Discover support → compare verified options → enquire/connect.
+
+The two loops should eventually reinforce one another:
+**discover a provider → enter its workspace relationship → receive tuition → continue learning → return to TutorMe for the next academic need.**
+
+### Security / truthfulness
+Workspace and operational data is private by default. Firestore rules must be default-deny outside explicit public collections and authorised workspace/platform roles.
+
+Do not deploy or claim the new Firestore rules are live merely because `firestore.rules` changed in GitHub. Live Firebase deployment must be separately verified.
+
+Invitation links/codes grant access only through an authenticated account and an explicit workspace membership record. Do not expose private student data through public provider listings.
+
+## 2026-10-07 workspace checkpoint
+Customer marketplace work has now continued into the first provider-owned workspace layer. The next implementation checkpoints should deepen real centre operations before adding speculative marketplace transaction mechanics.
