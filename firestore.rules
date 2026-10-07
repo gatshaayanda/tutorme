@@ -20,13 +20,13 @@ service cloud.firestore {
     }
     match /workspaceMembers/{id}{
       allow read: if admin() || (signed() && (resource.data.uid == request.auth.uid || workspaceAdmin(resource.data.workspaceId)));
-      allow create: if admin() || (signed() && request.resource.data.uid == request.auth.uid && request.resource.data.role == 'owner' && exists(/databases/$(database)/documents/workspaces/$(request.resource.data.workspaceId)) && get(/databases/$(database)/documents/workspaces/$(request.resource.data.workspaceId)).data.ownerUid == request.auth.uid) || workspaceAdmin(request.resource.data.workspaceId);
+      allow create: if admin() || (signed() && request.resource.data.uid == request.auth.uid && request.resource.data.role == 'owner' && exists(/databases/$(database)/documents/workspaces/$(request.resource.data.workspaceId)) && get(/databases/$(database)/documents/workspaces/$(request.resource.data.workspaceId)).data.ownerUid == request.auth.uid) || (signed() && request.resource.data.uid == request.auth.uid && request.resource.data.role in ['parent','student'] && request.resource.data.inviteCode is string && exists(/databases/$(database)/documents/workspaceInvites/$(request.resource.data.inviteCode)) && get(/databases/$(database)/documents/workspaceInvites/$(request.resource.data.inviteCode)).data.status == 'Pending' && get(/databases/$(database)/documents/workspaceInvites/$(request.resource.data.inviteCode)).data.workspaceId == request.resource.data.workspaceId && get(/databases/$(database)/documents/workspaceInvites/$(request.resource.data.inviteCode)).data.email == request.auth.token.email) || workspaceAdmin(request.resource.data.workspaceId);
       allow update,delete: if admin() || workspaceAdmin(resource.data.workspaceId);
     }
     match /workspaceStudents/{id}{ allow read,write: if admin() || workspaceAdmin(resource.data.workspaceId) || (signed() && exists(/databases/$(database)/documents/workspaceMembers/$(resource.data.workspaceId + '_' + request.auth.uid)) && get(/databases/$(database)/documents/workspaceMembers/$(resource.data.workspaceId + '_' + request.auth.uid)).data.role == 'parent'); }
     match /tuitionSessions/{id}{ allow read,write: if admin() || workspaceAdmin(resource.data.workspaceId) || (signed() && member(resource.data.workspaceId)); }
     match /workspaceFees/{id}{ allow read,write: if admin() || workspaceAdmin(resource.data.workspaceId) || (signed() && member(resource.data.workspaceId)); }
-    match /workspaceInvites/{id}{ allow read,write: if admin() || workspaceAdmin(resource.data.workspaceId); }
+    match /workspaceInvites/{id}{ allow read: if admin() || (signed() && resource.data.email == request.auth.token.email) || workspaceAdmin(resource.data.workspaceId); allow create: if admin() || workspaceAdmin(request.resource.data.workspaceId); allow update: if admin() || workspaceAdmin(resource.data.workspaceId) || (signed() && resource.data.email == request.auth.token.email && request.resource.data.status == 'Accepted'); allow delete: if admin() || workspaceAdmin(resource.data.workspaceId); }
 
     match /{document=**}{ allow read,write:false; }
   }
