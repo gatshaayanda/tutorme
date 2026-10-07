@@ -13,6 +13,7 @@ Do not invent tutor names, schedules, availability, results, testimonials, affil
 
 ## Roles
 - Product owner / final reviewer: user
+- Product requirements / project management: Ruth, who is expected to define the business requirements and specifications
 - Technical navigator + implementation: ChatGPT through repository tooling
 - GitHub is source of truth
 - No Codex dependency
@@ -25,8 +26,43 @@ Golden rule: **Unexpected result = STOP → inspect reality → then act.**
 ## Product direction
 TutorMe is not merely a brochure and should not become a generic school ERP.
 
-The core loop is:
-Parent/student discovers TutorMe → understands the real offer → enquires → TutorMe responds → student/parent returns for useful learning guidance, resources and updates → later, linked students/parents may receive role-appropriate progress and next-step information.
+The intended long-term direction is a **tutoring marketplace/network**, with TutorMe as the product and technical foundation for making academic support easier to discover, compare, enquire about and access.
+
+The product direction discussed with the owner/project manager is informed by the gap left by existing tutoring products:
+- TutorMe should aim toward the usefulness and breadth of a TeacherOn-style tutoring marketplace rather than remain only a single-centre website.
+- In Botswana, Lion Tutoring did not achieve the intended “Uber version of tutoring” outcome. TutorMe should learn from that gap rather than simply reproduce the same model.
+- The ambition is to make tutoring discoverable and reachable across providers: parents/students should eventually be able to find relevant tuition centres, independent tutors and other legitimate academic-support providers through one useful product.
+- The marketplace ambition is a product direction, not permission to invent providers, pricing, tutor qualifications, reviews, availability or outcomes.
+- The initial TutorMe centre remains real and operational. The current public experience should continue to represent the verified TutorMe offer while the broader network/marketplace capability is built in controlled stages.
+
+### Product evolution
+Use this staged model unless Ruth/the owner supplies a newer requirement:
+
+1. **Current foundation — real TutorMe**
+   - Present the verified Block 8 tuition offer clearly.
+   - Capture short, useful enquiries without requiring an account.
+   - Give parents/students a direct WhatsApp/contact path.
+   - Provide useful moderated learning resources and updates that bring users back.
+
+2. **Discovery/network layer**
+   - Establish data structures and admin workflows that can represent legitimate tuition providers, tutors, subjects/levels, service areas, contact paths and publishing status.
+   - Public discovery should eventually let a parent/student understand who offers what and how to enquire.
+   - Provider information must be owner/admin verified before publication.
+
+3. **Marketplace layer**
+   - Move toward TeacherOn-like breadth: searchable academic support, provider profiles/listings, fit by subject/education level/location or delivery mode, and clear enquiry/connection flows.
+   - Do not assume payments, booking, automated matching, ratings, subscriptions or commissions are required until the owner explicitly specifies them.
+   - Keep the product useful even before a full transaction marketplace exists.
+
+4. **Network effects**
+   - Make it easier for more legitimate tutors/centres to participate and for parents/students to find suitable support.
+   - Build trust, moderation, structured provider information and useful return-to-app behaviour before adding growth mechanics.
+
+The core near-term loop remains:
+Parent/student discovers TutorMe → understands the real offer → enquires → TutorMe responds → student/parent returns for useful learning guidance, resources and updates.
+
+The longer-term loop is:
+Parent/student discovers academic support → compares relevant verified options → enquires/connects → receives support → returns when another academic need arises.
 
 The digital product should strengthen the real physical TutorMe experience rather than replace it.
 
@@ -44,7 +80,7 @@ Gamification is optional. If used, it must reinforce learning behaviour rather t
 Do not build public student profiles, public grades, public weaknesses, child contact details or unmoderated student-to-student messaging.
 
 ## Public experience
-The public site must make tuition immediately understandable and make Enrol / Enquire plus direct WhatsApp contact prominent.
+The public site must make the verified TutorMe tuition offer immediately understandable and make Enrol / Enquire plus direct WhatsApp contact prominent.
 
 The enquiry form should not require an account. Capture only information useful to Ruth/team:
 - parent/guardian name
@@ -59,6 +95,8 @@ Truthful states:
 - synchronized online enquiry: TutorMe has the enquiry;
 - offline queued enquiry: saved on this phone and waiting to synchronize;
 - failed save: do not claim TutorMe received it.
+
+As marketplace capability is introduced, do not turn the current TutorMe landing page into a fake catalogue of unverified providers. Public discovery should only reflect real, verified listings.
 
 ## Learning feed
 The feed is a moderated editorial learning layer, not social media.
@@ -88,7 +126,16 @@ First useful operational areas:
 - learning feed publishing
 - resource publishing
 
-Later layers may add:
+Marketplace groundwork may later add:
+- provider/tutor profiles
+- provider verification state
+- subjects and education levels
+- service area / delivery mode
+- provider contact/enquiry routing
+- publishing state
+- provider ownership/admin controls
+
+Later student-centre layers may add:
 - attendance
 - lesson/session records
 - subject goals
@@ -153,7 +200,9 @@ Use repositories as patterns, not business logic:
 ## Competitive UX research checkpoint — 2026-10-06
 - Reviewed current tutoring UX patterns and Botswana alternatives including Stadira Training Institute, Superprof Gaborone listings and Tutopiya's Botswana offer.
 - Reusable patterns: state subject/level fit quickly, make the parent/student next step obvious, keep mobile enquiry short, provide direct contact, and build trust without inventing testimonials or outcomes.
-- TutorMe should not copy marketplace pricing or claims. Its advantage is a direct local tuition relationship, a simple enquiry path, and useful learning content that brings families back.
+- TeacherOn is the relevant product reference for marketplace breadth, not a business model to copy blindly.
+- Lion Tutoring is a local reference point for the unresolved “Uber of tutoring” opportunity; TutorMe should differentiate by building verified supply, structured discovery, trust and useful enquiry/connection flows rather than copying a failed surface.
+- TutorMe should not copy marketplace pricing or claims. Its current advantage is a direct local tuition relationship; its long-term opportunity is to extend that foundation into a broader verified tutoring network.
 - Do not add tutor qualifications, exam results, reviews, guarantees, exact subject lists, schedules or availability until the business supplies verified evidence.
 
 ## Required removal rule
@@ -170,7 +219,9 @@ Before meaningful checkpoints:
 - verify PWA routes/cache names
 - verify the install prompt can appear from the public shell, not only /admin
 - verify online/offline wording is truthful
+- verify marketplace/provider claims are backed by real admin data before publication
 
 ## Scope discipline
 Prefer the smallest controlled change that moves TutorMe toward the product direction above. Preserve working capabilities only when they fit TutorMe. Delete inherited Namane business assumptions rather than renaming them.
 
+When requirements from Ruth/the owner are still forthcoming, record them as requirements to capture rather than inventing implementation details.
