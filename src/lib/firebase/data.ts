@@ -1,5 +1,5 @@
 "use client";
-import{collection,deleteDoc,doc,getDocs,limit,orderBy,query,setDoc,updateDoc,waitForPendingWrites,where}from"firebase/firestore";
+import{collection,deleteDoc,doc,getDoc,getDocs,limit,orderBy,query,setDoc,updateDoc,waitForPendingWrites,where}from"firebase/firestore";
 import{db}from"./client";
 
 export const POST_TYPES=["Study Move","Challenge","Parent Move","Today at TutorMe","Student Life","Celebrate"] as const;
@@ -35,7 +35,7 @@ export async function deleteResource(id:string){await deleteDoc(doc(db,"resource
 export async function updateEnquiryStatus(id:string,status:Enquiry["status"]){await updateDoc(doc(db,"enquiries",id),{status})}
 
 export async function createWorkspace(input:Omit<Workspace,"id"|"createdAt"|"updatedAt"|"status">){const now=new Date().toISOString();const ref=doc(workspaces);await setDoc(ref,{...input,status:"Pending",createdAt:now,updatedAt:now});await setDoc(doc(members,ref.id+"_"+input.ownerUid),{uid:input.ownerUid,workspaceId:ref.id,role:"owner",name:input.name,email:input.contactEmail,status:"active",createdAt:now});return ref.id}
-export async function getMyWorkspaces(uid:string){const s=await getDocs(query(members,where("uid","==",uid),where("role","in",["owner","staff","tutor"])));const ids=s.docs.map(d=>String(d.data().workspaceId));if(!ids.length)return[];const ws=await getDocs(query(workspaces,where("__name__","in",ids.slice(0,10))));return ws.docs.map(d=>({id:d.id,...d.data()} as Workspace))}
+export async function getWorkspace(id:string){const d=await getDoc(doc(workspaces,id));return d.exists()?({id:d.id,...d.data()} as Workspace):null}\nexport async function getMyWorkspaces(uid:string){const s=await getDocs(query(members,where("uid","==",uid),where("role","in",["owner","staff","tutor"])));const ids=s.docs.map(d=>String(d.data().workspaceId));if(!ids.length)return[];const ws=await getDocs(query(workspaces,where("__name__","in",ids.slice(0,10))));return ws.docs.map(d=>({id:d.id,...d.data()} as Workspace))}
 export async function getWorkspaceMembers(workspaceId:string){const s=await getDocs(query(members,where("workspaceId","==",workspaceId),orderBy("createdAt","desc"),limit(200)));return s.docs.map(d=>({id:d.id,...d.data()} as WorkspaceMember))}
 export async function saveWorkspaceMember(input:Omit<WorkspaceMember,"id"|"createdAt">,id?:string){const ref=id?doc(db,"workspaceMembers",id):doc(members);await setDoc(ref,{...input,createdAt:new Date().toISOString()},{merge:true});return ref.id}
 export async function getWorkspaceStudents(workspaceId:string){const s=await getDocs(query(students,where("workspaceId","==",workspaceId),orderBy("createdAt","desc"),limit(200)));return s.docs.map(d=>({id:d.id,...d.data()} as WorkspaceStudent))}
@@ -46,5 +46,5 @@ export async function getWorkspaceFees(workspaceId:string){const s=await getDocs
 export async function saveWorkspaceFee(input:Omit<Fee,"id"|"createdAt"|"updatedAt">,id?:string){const now=new Date().toISOString();const ref=id?doc(db,"workspaceFees",id):doc(fees);await setDoc(ref,{...input,...(id?{}:{createdAt:now}),updatedAt:now},{merge:true});return ref.id}
 export async function updateFeeStatus(id:string,status:Fee["status"]){await updateDoc(doc(fees,id),{status,...(status==="Paid"?{paidAt:new Date().toISOString()}:{})})}
 export async function createWorkspaceInvite(input:Omit<WorkspaceInvite,"id"|"createdAt"|"expiresAt"|"status"|"code">){const now=new Date();const code=Math.random().toString(36).slice(2,8).toUpperCase();const ref=doc(invites,code);await setDoc(ref,{...input,code,status:"Pending",createdAt:now.toISOString(),expiresAt:new Date(now.getTime()+7*86400000).toISOString()});return{...input,id:ref.id,code}}
-export async function getWorkspaceInvites(workspaceId:string){const s=await getDocs(query(invites,where("workspaceId","==",workspaceId),orderBy("createdAt","desc"),limit(100)));return s.docs.map(d=>({id:d.id,...d.data()} as WorkspaceInvite))}
+export async function getWorkspaceInviteByCode(code:string){const d=await getDoc(doc(invites,code));return d.exists()?({id:d.id,...d.data()} as WorkspaceInvite):null}\nexport async function acceptWorkspaceInvite(id:string){await updateDoc(doc(invites,id),{status:"Accepted"});}\nexport async function getWorkspaceInvites(workspaceId:string){const s=await getDocs(query(invites,where("workspaceId","==",workspaceId),orderBy("createdAt","desc"),limit(100)));return s.docs.map(d=>({id:d.id,...d.data()} as WorkspaceInvite))}
 export async function deleteWorkspace(id:string){await deleteDoc(doc(db,"workspaces",id))}
