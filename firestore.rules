@@ -1,1 +1,33 @@
-rules_version='2';service cloud.firestore{match/databases/{database}/documents{function signed(){return request.auth!=null;}function admin(){return signed()&&exists(/databases/$(database)/documents/admins/$(request.auth.uid))&&get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role in ['owner','staff'];}match/admins/{uid}{allow read:if signed()&&request.auth.uid==uid;allow write:false;}match/enquiries/{id}{allow create:if request.resource.data.status=='New'&&request.resource.data.name is string&&request.resource.data.phone is string&&request.resource.data.studentName is string&&request.resource.data.educationLevel is string&&request.resource.data.tuitionNeeds is string;allow read,update,delete:if admin();}match/learningPosts/{id}{allow read:if resource.data.published==true||admin();allow create,update,delete:if admin();}match/resources/{id}{allow read:if resource.data.published==true||admin();allow create,update,delete:if admin();}match/providers/{id}{allow read:if resource.data.published==true||admin();allow create,update,delete:if admin();}match/students/{id}{allow read,write:if admin();}match/{document=**}{allow read,write:false;}}}
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signed(){ return request.auth != null; }
+    function admin(){ return signed() && exists(/databases/$(database)/documents/admins/$(request.auth.uid)) && get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role in ['owner','staff']; }
+    function member(ws){ return signed() && exists(/databases/$(database)/documents/workspaceMembers/$(ws + '_' + request.auth.uid)); }
+    function workspaceAdmin(ws){ return member(ws) && get(/databases/$(database)/documents/workspaceMembers/$(ws + '_' + request.auth.uid)).data.role in ['owner','staff']; }
+
+    match /admins/{uid}{ allow read: if signed() && request.auth.uid==uid; allow write:false; }
+    match /enquiries/{id}{ allow create:if request.resource.data.status=='New' && request.resource.data.name is string && request.resource.data.phone is string && request.resource.data.studentName is string && request.resource.data.educationLevel is string && request.resource.data.tuitionNeeds is string; allow read,update,delete:if admin(); }
+    match /learningPosts/{id}{ allow read:if resource.data.published==true||admin(); allow create,update,delete:if admin(); }
+    match /resources/{id}{ allow read:if resource.data.published==true||admin(); allow create,update,delete:if admin(); }
+    match /providers/{id}{ allow read:if resource.data.published==true||admin(); allow create,update,delete:if admin(); }
+    match /students/{id}{ allow read,write:if admin(); }
+
+    match /workspaces/{id}{
+      allow create: if signed() && request.resource.data.ownerUid == request.auth.uid;
+      allow read,update: if admin() || workspaceAdmin(id);
+      allow delete: if admin() || (workspaceAdmin(id) && get(/databases/$(database)/documents/workspaces/$(id)).data.ownerUid == request.auth.uid);
+    }
+    match /workspaceMembers/{id}{
+      allow read: if admin() || (signed() && (resource.data.uid == request.auth.uid || workspaceAdmin(resource.data.workspaceId)));
+      allow create: if admin() || (workspaceAdmin(request.resource.data.workspaceId) && request.resource.data.uid == request.auth.uid);
+      allow update,delete: if admin() || workspaceAdmin(resource.data.workspaceId);
+    }
+    match /workspaceStudents/{id}{ allow read,write: if admin() || workspaceAdmin(resource.data.workspaceId) || (signed() && exists(/databases/$(database)/documents/workspaceMembers/$(resource.data.workspaceId + '_' + request.auth.uid)) && get(/databases/$(database)/documents/workspaceMembers/$(resource.data.workspaceId + '_' + request.auth.uid)).data.role == 'parent'); }
+    match /tuitionSessions/{id}{ allow read,write: if admin() || workspaceAdmin(resource.data.workspaceId) || (signed() && member(resource.data.workspaceId)); }
+    match /workspaceFees/{id}{ allow read,write: if admin() || workspaceAdmin(resource.data.workspaceId) || (signed() && member(resource.data.workspaceId)); }
+    match /workspaceInvites/{id}{ allow read,write: if admin() || workspaceAdmin(resource.data.workspaceId); }
+
+    match /{document=**}{ allow read,write:false; }
+  }
+}
