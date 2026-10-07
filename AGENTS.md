@@ -306,3 +306,7 @@ Invitation links/codes grant access only through an authenticated account and an
 
 ## 2026-10-07 workspace checkpoint
 Customer marketplace work has now continued into the first provider-owned workspace layer. The next implementation checkpoints should deepen real centre operations before adding speculative marketplace transaction mechanics.
+
+
+### Implementation checkpoint — 2026-10-07
+The first centre-workspace implementation is pushed to main. It includes centre registration, private workspaces, workspace membership roles, student records, tuition session records with online/in-person mode and optional meeting links, fee tracking, invitation codes, invitation acceptance, platform Operations visibility of registered centres, and provider-draft creation for newly registered centres. Firebase rules remain source-controlled but require explicit Firebase deployment before they are live.
