@@ -205,6 +205,25 @@ Use repositories as patterns, not business logic:
 - TutorMe should not copy marketplace pricing or claims. Its current advantage is a direct local tuition relationship; its long-term opportunity is to extend that foundation into a broader verified tutoring network.
 - Do not add tutor qualifications, exam results, reviews, guarantees, exact subject lists, schedules or availability until the business supplies verified evidence.
 
+## Customer marketplace redesign checkpoint — 2026-10-07
+The customer side is now being reshaped around discovery rather than a single-centre brochure, using BOEMO's data-driven public experience, The Wall's ecosystem/navigation model, and Admin Hub Global's direct editorial hierarchy as internal product references.
+
+External marketplace research reinforces the same pattern: TeacherOn exposes search by subject/skill/location and online/home modes, provider profiles, requirements and trust signals; Superprof emphasizes profile comparison and student choice. TutorMe should take the useful discovery patterns without copying their pricing or transaction model.
+
+Psychology/evidence constraints:
+- support autonomy through meaningful choice rather than pressure;
+- reduce decision load by making subject, level, location and delivery mode visible early;
+- support competence with small, actionable learning next steps;
+- support relatedness with warm, human contact and safe boundaries;
+- keep feedback specific and tied to the learner's next action.
+These principles are consistent with Self-Determination Theory's autonomy/competence/relatedness framework and evidence-based feedback guidance.
+
+Customer-side provider model is now represented by a providers Firestore collection with CRUD-ready fields for kind, identity, description, location, modes, subjects, levels, verification, featured state, contact route, price label, publishing state and timestamps. Public reads are restricted to published providers; owner/staff will later receive CRUD controls in Operations.
+
+Preview provider data is intentionally marked as sample data. It must not be presented as real provider claims. The real TutorMe Tuition Center listing is the only current verified marketplace seed.
+
+Do not add public reviews, ratings, tutor qualifications, availability, pricing or verification claims unless those facts are supplied and verified by the business.
+
 ## Required removal rule
 Boarding is retired. Remove boarding-related product copy, fields, routes, UI and rules before meaningful checkpoints. Existing legacy Firestore documents are not to be fabricated or rewritten without a specific data-migration need.
 
