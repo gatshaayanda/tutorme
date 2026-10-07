@@ -2,9 +2,9 @@
 import{collection,deleteDoc,doc,getDoc,getDocs,limit,orderBy,query,setDoc,updateDoc,waitForPendingWrites,where}from"firebase/firestore";
 import{db}from"./client";
 
-export const POST_TYPES=["Study Move","Challenge","Parent Move","Today at TutorMe","Student Life","Celebrate"] as const;
+export const POST_TYPES=["Study Move","Challenge","Game","Parent Move","Today at TutorMe","Student Life","Celebrate"] as const;
 export type PostType=typeof POST_TYPES[number];
-export type LearningPost={id:string;type:PostType;title:string;body:string;published:boolean;createdAt:string;updatedAt:string};
+export type LearningPost={id:string;type:PostType;title:string;body:string;published:boolean;createdAt:string;updatedAt:string;gameUrl?:string;gameRepo?:string;themeIds?:string[]};
 export type Resource={id:string;title:string;description:string;type:"PDF"|"Image"|"Link";url:string;published:boolean;createdAt:string};
 export type ProviderKind="Tutor"|"Tuition Centre"|"Academic Support";
 export type Provider={id:string;kind:ProviderKind;name:string;tagline:string;description:string;location:string;modes:string[];subjects:string[];levels:string[];verified:boolean;featured:boolean;contactLabel:string;phone?:string;priceLabel?:string;imageUrl?:string;published:boolean;createdAt:string;updatedAt:string;workspaceId?:string;ownerUid?:string};

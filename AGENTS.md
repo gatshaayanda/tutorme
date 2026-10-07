@@ -354,3 +354,43 @@ A push is not a debugging tool. It is the release of a verified candidate.
 ## Full product loop — 2026-10-07
 **Discover → choose → connect (invite/request) → configure notifications → enter workspace → learn/work → receive useful updates → return.**
 The public network optimizes for fit and trust; the private workspace optimizes for action and continuity. Verification, connection requests and notification setup are foundational infrastructure, not decorative features.
+
+
+## Learning-network roadmap — 2026-10-07
+
+TutorMe is now explicitly a **learning network**, with tutoring as its first operating supply type. The product must not be architected around the assumption that every user arrives saying find a tutor.
+
+### Learning discovery model
+- what someone wants to learn: subject, skill or practical pathway;
+- level/path: PSLE, JCE where verified, BGCSE, Cambridge IGCSE, senior secondary, certificate/trade, apprenticeship, beginner/practical;
+- delivery: online, in person or self-paced where genuinely offered;
+- place where in-person access matters;
+- provider type: tuition centre, tutor, academic support or later legitimate practical/training provider;
+- trust state: verified first, unverified clearly labelled.
+
+The user should be able to say: I need Maths. I need BGCSE. I need this level. I want online. I want someone near me. Then progressively narrow to a useful human/provider connection.
+
+### Botswana learning catalogue
+The catalogue is a structured discovery taxonomy, not an affiliation claim. Current reference families include PSLE, BGCSE, Cambridge IGCSE, trades/vocational skills, apprenticeships, and driving school/road skills. BEC publishes PSLE and BGCSE subject information; Cambridge publishes the flexible IGCSE curriculum; Botswana government publishes vocational and apprenticeship pathways. TutorMe must not imply affiliation with any of them.
+
+### Games as learning infrastructure
+Admin Hub Games is an internal reusable game-development source, not an external provider marketplace. TutorMe may publish approved educational games into the public learning feed. Games may be playable by account holders or non-account visitors, attach to a learning path, reinforce retrieval/practice/orientation/challenge, and publish genuine results only when actually generated. Never invent scores, rankings, completion rates or success claims. Avoid exposing children identity, grades or weaknesses; prefer anonymous or consented display names and aggregate outcomes.
+
+### Feed evolution
+The feed remains moderated editorial content, but now supports a controlled Game post type. A game post can link to a public playable experience without requiring an account. Longer-term content is: learning path -> resource/challenge/game -> genuine result -> useful next step -> provider/workspace connection.
+
+### Full network roadmap
+Phase 1: learning catalogue; subject + level + mode + place discovery; verified-first provider directory; provider detail; connection request; centre invitation.
+Phase 2: centre workspace; roles/membership; notification setup; students/parents/tutors/staff; online/in-person sessions; fee state; verification.
+Phase 3: learning-path pages; provider supply attached to paths; resources; challenges/retrieval practice; Admin Hub educational games; genuine game results; feed links back to paths/providers.
+Phase 4: parent/student requests; centre approval; invite relationships; private workspace activity; useful notifications; return loops.
+Phase 5, only after real usage evidence: richer provider profiles, better search, moderation, availability, ratings/reviews, booking, payments, commissions/subscriptions, automated matching. None of these transaction mechanics are assumed today.
+
+### UX principle
+Do not make the homepage say find a tutor as though tutoring is the only reason to visit. The broader entry is learn / find support / connect / play / return. Reduce uncertainty progressively: what do I need -> what level/path -> online or in person -> who can help -> why trust them -> how do I connect?
+
+### Safety
+Never expose student grades, weaknesses, parent contact details, private workspace records or child identity through public discovery or game results. Public game participation may be anonymous. Do not make public leaderboards the default motivation mechanism.
+
+### Roadmap checkpoint
+The current implementation has provider/workspace/verification/connection foundations and now adds a structured learning catalogue plus a controlled Game feed type. Next meaningful work should connect these pieces rather than add unrelated pages.
