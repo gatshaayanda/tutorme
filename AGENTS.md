@@ -330,3 +330,27 @@ Before pushing any code change:
 **Golden rule for pushes:** `VERIFY FIRST → PUSH ONCE → INSPECT REMOTE RESULT → STOP IF FAILED`.
 
 A push is not a debugging tool. It is the release of a verified candidate.
+
+## Verification + network trust checkpoint — 2026-10-07
+- Every tuition-centre workspace enters **unverified**. Workspace access does not depend on verification.
+- Verification is a platform trust tier, not a subscription tier: TutorMe Operations verifies only after confirming proof of payment and the required tuition-centre documentation.
+- Verified public listings appear first and receive a restrained verified badge / stronger visual treatment. Unverified published listings remain available but visually basic. “Unverified” means TutorMe has not completed its verification review; it is not a claim that the centre is illegitimate.
+- Verification state is stored on the workspace and mirrored to its provider listing. Admin verification is the only route to the verified public state.
+- Centres can submit documentation references and request verification from their workspace. The current implementation stores URLs/review state; actual document upload/storage remains a later implementation decision.
+
+## Connection + workspace loop — 2026-10-07
+- Public discovery is the front door; a private workspace is the operating relationship.
+- Use both relationship-entry patterns: invitation for a known person and a parent/student connection request for someone discovering a centre publicly.
+- Requests are private workspace data. Public provider pages expose only safe provider information and a connection CTA.
+- Never expose student records, parent contact details, grades, weaknesses or private workspace activity publicly.
+
+## Notification onboarding checkpoint — 2026-10-07
+- Notification preferences are early onboarding infrastructure for authenticated workspace members.
+- Do not request browser notification permission on page load. Explain the value first and ask only after an explicit user action. citeturn0search5
+- Preference categories: sessions, fees, connection requests, workspace updates and learning/feed updates.
+- Preference storage is not the same as working push delivery. Do not claim push works until FCM web credentials, service-worker registration and a trusted server send path are configured and tested.
+- Eventual FCM implementation should use active device registrations with freshness timestamps and remove stale/invalid registrations.
+
+## Full product loop — 2026-10-07
+**Discover → choose → connect (invite/request) → configure notifications → enter workspace → learn/work → receive useful updates → return.**
+The public network optimizes for fit and trust; the private workspace optimizes for action and continuity. Verification, connection requests and notification setup are foundational infrastructure, not decorative features.
