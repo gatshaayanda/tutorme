@@ -310,3 +310,23 @@ Customer marketplace work has now continued into the first provider-owned worksp
 
 ### Implementation checkpoint — 2026-10-07
 The first centre-workspace implementation is pushed to main. It includes centre registration, private workspaces, workspace membership roles, student records, tuition session records with online/in-person mode and optional meeting links, fee tracking, invitation codes, invitation acceptance, platform Operations visibility of registered centres, and provider-draft creation for newly registered centres. Firebase rules remain source-controlled but require explicit Firebase deployment before they are live.
+
+## Push discipline / anti-waste rule — 2026-10-07
+
+**Do not waste commits, pushes, Vercel deployments, CI runs or deployment-rate-limit capacity.**
+
+Before pushing any code change:
+1. **Inspect the actual current state first.** Read the relevant source and current GitHub/CI/deployment status; do not assume the previous fix was sufficient.
+2. **Batch related fixes into one controlled change.** Do not make a separate commit for each obvious lint/type error when the errors are in the same affected area and can be corrected together.
+3. **Run the required local checks before pushing:** at minimum `npx tsc --noEmit`, `npm run lint`, and `npm run build` when dependencies/environment allow. If a check cannot be run, say so explicitly rather than pushing blindly.
+4. **Never push a known-failing build.** A warning may be acceptable only if it is genuinely non-blocking and understood; a TypeScript error, lint error or build error must be fixed before push.
+5. **Do not use Vercel as the first test runner.** Vercel deployment attempts are for a candidate that has already passed source-level verification, not for discovering predictable compile/lint/type errors.
+6. **After a failed CI/Vercel build, stop and inspect the exact failure before another push.** Do not guess, stack “fix commits”, or spend deployment attempts hoping the next one works.
+7. **Respect deployment/rate limits.** If Vercel is rate-limited, do not trigger manual/redeploy builds or push speculative changes merely to see what happens. Fix and verify source locally, then wait for the available deployment window.
+8. **Keep commits meaningful and atomic.** A commit should represent a coherent verified change/checkpoint, not a reaction to one line of a failed remote build.
+9. **Before checkpointing, verify the candidate commit itself:** inspect `git diff`, status, the final relevant files, and the exact commit SHA/branch. Confirm CI/Vercel is evaluating the commit you intend.
+10. **If remote CI reveals a failure that should have been caught locally, treat that as a process failure:** fix the process/checklist as well as the code.
+
+**Golden rule for pushes:** `VERIFY FIRST → PUSH ONCE → INSPECT REMOTE RESULT → STOP IF FAILED`.
+
+A push is not a debugging tool. It is the release of a verified candidate.
