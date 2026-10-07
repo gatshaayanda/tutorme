@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {useEffect,useMemo,useState} from "react";
+import {Suspense,useEffect,useMemo,useState} from "react";
 import {useSearchParams} from "next/navigation";
 import {getPublishedProviders,type Provider} from "@/lib/firebase/data";
 import {LEARNING_PATHS} from "@/lib/learning-catalog";
@@ -9,7 +9,7 @@ import {providerSeed} from "@/lib/firebase/provider-seed";
 
 const filters=["All","Tutor","Tuition Centre","Academic Support"];
 
-export default function FindSupport(){
+function FindSupportContent(){
  const searchParams=useSearchParams();
  const requestedPath=searchParams.get("path")||"";
  const selectedPath=LEARNING_PATHS.find(p=>p.id===requestedPath);
@@ -40,3 +40,5 @@ export default function FindSupport(){
   <section className="marketCta"><div className="marketContainer"><span className="eyebrow">Not sure where to start?</span><h2>Describe the need.<br/><em>We can take it from there.</em></h2><p>You do not need to know the perfect tutor or provider before you ask. Start with the student, subject, level and goal.</p><Link className="button primary" href="/enrol">Post a tutoring need →</Link></div></section>
  </main>
 }
+
+export default function FindSupport(){return <Suspense fallback={<main className="marketPage"><section className="marketContainer"><span className="eyebrow">Find academic support</span><h1>Loading support directory.</h1></section></main>}><FindSupportContent/></Suspense>}
