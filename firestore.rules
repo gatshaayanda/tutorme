@@ -20,7 +20,7 @@ service cloud.firestore {
     }
     match /workspaceMembers/{id}{
       allow read: if admin() || (signed() && (resource.data.uid == request.auth.uid || workspaceAdmin(resource.data.workspaceId)));
-      allow create: if admin() || (workspaceAdmin(request.resource.data.workspaceId) && request.resource.data.uid == request.auth.uid);
+      allow create: if admin() || (signed() && request.resource.data.uid == request.auth.uid && request.resource.data.role == 'owner' && exists(/databases/$(database)/documents/workspaces/$(request.resource.data.workspaceId)) && get(/databases/$(database)/documents/workspaces/$(request.resource.data.workspaceId)).data.ownerUid == request.auth.uid) || workspaceAdmin(request.resource.data.workspaceId);
       allow update,delete: if admin() || workspaceAdmin(resource.data.workspaceId);
     }
     match /workspaceStudents/{id}{ allow read,write: if admin() || workspaceAdmin(resource.data.workspaceId) || (signed() && exists(/databases/$(database)/documents/workspaceMembers/$(resource.data.workspaceId + '_' + request.auth.uid)) && get(/databases/$(database)/documents/workspaceMembers/$(resource.data.workspaceId + '_' + request.auth.uid)).data.role == 'parent'); }
